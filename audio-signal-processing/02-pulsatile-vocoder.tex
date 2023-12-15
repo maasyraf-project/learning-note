@@ -1,0 +1,64 @@
+\lesson{2}{Friday 5 Des 2023 18:20}{Paper Review : Overview of Gammatone Filterbank, based on Hohmann (2002)}
+
+\subsection{Important notes}
+\begin{itemize}
+	\item The vocoder aims to reconstruct acoustic signals in electric domain, which can be useful for hearing process in cochlear implant users.
+	
+	\item In this chapter, it will be described the pulsatile vocoder which simulate manufactured CI namely OPUS2 speech processor by Med-El (Breacker, 2009). 
+	
+	\item There are two strategies that will be explained, which are continuous interleaved sampling (CIS) and fine structure processing (FSP)
+	
+	\item On CIS strategy, acoustic signal is processed in independence channel which transmit only the fluctuation of its energy (envelope)
+	
+	\item Meanwhile, the FSP strategy sample only positive signal components (fine structure) in the several lower frequency channel. This approach is based on channel specific sampling frequency (CSSS) provided by Zierhofer (2001)
+	
+	\item More FS information that can be transmitted, it will result in improved pitch discrimination. It can be implied by evaluation in speaker discrimination or speech understanding in noise condition (with presence of competing speakers)
+	
+\end{itemize}
+
+\subsection{Technical implementation: CIS}
+\begin{enumerate}
+	\item The overview of block processing:
+	\begin{enumerate}
+		\item Apply 3rd-order Gammatone filterbank 
+		\item Dynamic compression of signal 
+		\item Pulsatile sampling and coding strategies imlementation
+		\item spatial current spread
+		\item 
+	\end{enumerate}
+	
+	\item The Gammatone filterbank details.
+	
+	The distance between filterbank is 1 equivalent rectangular bandwidth (ERB) between their center frequencies, which overlapped around \(-3.5 dB\). 
+	
+	The confugration with 12 channels result in filterbank make the overlapping around \(-17 dB\)
+	
+	Use of complex values-output Gammatone filterbank in analysis stage (Hohmann, 2002) enable the calculation of signal envelope can be easily achived from real and imaginary part of signals.
+	
+	\item Compression stage
+	
+	The dynamic range is reduced from range of 20 to 90 dB SPL to 30 dB in electrical domain. This stage represent the condition of cochlear compression loss (Bacon, Zeng, 2004)
+	
+	\item Sampling stage
+	
+	The sampling stage is conducted based on which strategy used on the simulation (whether CIS or FSP). Broadband standard pulse abd randomized sequence are implemented during sampling process on each frequency channels. 
+	
+	On obtaining temporal information from FS, it is only positive part of signal which will be sampled. The stimulation pulse in synchronized with the zero-crossing rate (Nobbe, 2006). And also it just a maximum amplitude value extracted from all channels per sampling time (can be mentioned as sequential sampling).
+	
+	\item Spatial current spread
+	
+	This stage represent the interaction between electrude due to overlap of pulse train, which can affect the transmitted fine structure.
+	
+	\item Second filtering for auralize the pulse result from the previous stages
+	
+	This part re-divide the broadband standard pulse into band-specific frequencies. 
+	
+	\item Syntesize stage
+	
+	This stage convert 12-channels of signal into single channel by adding "desired delay". 
+	
+\end{enumerate}
+
+
+
+

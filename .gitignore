@@ -1,0 +1,6 @@
+.git
+*.log
+*.aux
+*.synctex.gz
+*.pdf
+*.toc

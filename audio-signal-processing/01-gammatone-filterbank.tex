@@ -1,0 +1,68 @@
+\lesson{1}{Monday 11 Des 2023 18:20}{Paper Review : Overview of Gammatone Filterbank, based on Hohmann (2002)}
+
+\subsection{Important notes}
+\begin{itemize}
+	\item The Gammatone filters are commonly used for modelling peripheral filtering in the cochlea
+	
+	\item On its implementation, there are several approximation that can be considered on modelling the filters.
+	
+	\begin{enumerate}
+		\item Impulse-invariant or frequency-invariant
+		\item Multi-zero, one-zero, or all-pole design
+		\item Complex or real filter output
+	\end{enumerate}
+	
+	\item Several implementation of Gammatone filterbanks are simulate peripheral filtering stage on computational auditory model; speech- and music-coder; and used as a block process in speech recognition task (Hahmann, 2002).
+	
+\end{itemize}
+
+\subsection{Technical implementation: Synthesis (based on Hohmann, 2002)}
+In this model, the Gammatone filterbank has computationally efficient implementation, which can be categorized as impulse-invariant, all-pole design, and result in complex values output. 
+
+First of all, consider a sampled of complex Gammatone impulse response:
+
+\begin{equation}
+	g_\gamma (n) = n^{\gamma - 1} \cdot \tilde{a}^n , n>=0
+\end{equation}
+
+\begin{equation}
+	\tilde{a} = \lambda \cdot exp(\imath\beta)
+\end{equation}
+
+On above equations, 
+\begin{itemize}
+	\item $\gamma$ : filter order
+	\item \(a\) : complex analog Gammatone impulse response
+	\item $\lambda$ : damping bandwidth parameter
+	\item \(n\) : index of impulse response sample
+\end{itemize}
+
+Then, on \(z-\)domain, the frequency response of first-order complex bandpass filter can be expressed as,
+
+\begin{equation}
+	G_1(z) = \frac{1}{1-\tilde{a}z^{-1}}
+\end{equation}
+
+On the higher order of filter design, the model then can be defnied by take derivation on $\zeta$-domain of frequency response. Hence,
+
+\begin{equation}
+	\zeta[n \cdot g_{\gamma}(n)] = -z \frac{dG(z)}{dz}
+\end{equation}
+
+Finally, for 4-th order Gammatone filterbank, we got
+
+\begin{equation}
+	G_4(z) = \frac{\tilde{a}z^{-1} + 4 \cdot (\tilde{a}z^{-1})^2 + (\tilde{a}z^{-1})^3}{(1-\tilde{a}z^{-1})^4}
+\end{equation}
+
+The main idea of this implementation is to simplify the filter model by omitting the numerator on the frequency response equation above. Then, we obtain a casade version of first-order filter, as shown below 
+
+\begin{equation}
+	K_4(z) = \frac{1}{(1-\tilde{a}z^(-1))^4}
+\end{equation} 
+
+As note, omitting the numerator has small effect on filter design, sinze poles are more influencing than zeros. 
+
+\begin{equation}
+	content...
+\end{equation}
